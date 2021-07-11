@@ -1,6 +1,13 @@
 import { addItemToCart, removeItemFromCart } from "./cart.utils";
 
-const cartReducer = (state, action) => {
+const initialCartState = {
+  items: [],
+  userInfo: null,
+  totalAmount: 0,
+  removeItem: (item) => {},
+  addItem: (item) => {},
+};
+const cartReducer = (state = initialCartState, action) => {
   switch (action.type) {
     case "REMOVE_ITEM":
       let tempRemove = removeItemFromCart(
@@ -20,6 +27,12 @@ const cartReducer = (state, action) => {
         ...state,
         items: temp[0],
         totalAmount: temp[1],
+      };
+    case "CLEAR_CART":
+      return {
+        ...state,
+        items: [],
+        totalAmount: 0,
       };
 
     default:

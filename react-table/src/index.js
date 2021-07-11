@@ -4,12 +4,34 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthContextProvider } from "./store/auth-context-api";
+import CartContext from "./store/cart-context";
+import CartProvider from "./store/CartProvider";
+import { Provider } from "react-redux";
+import store from "./redux_test/store";
+import { BrowserRouter } from "react-router-dom";
+// CONTEXT API REMEMBER THAT:: WRAPPER BY PROVIDER
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <AuthContextProvider>
+//       <CartProvider>
+//         <App />
+//       </CartProvider>
+//     </AuthContextProvider>
+//   </React.StrictMode>,
+//   document.getElementById("root")
+// );
 
 ReactDOM.render(
   <React.StrictMode>
-    <AuthContextProvider>
-      <App />
-    </AuthContextProvider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <AuthContextProvider>
+          <CartProvider>
+            <App />
+          </CartProvider>
+        </AuthContextProvider>
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );

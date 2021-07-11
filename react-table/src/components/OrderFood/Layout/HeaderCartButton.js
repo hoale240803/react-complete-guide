@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import CartContext from "../../../store/cart-context";
 
 import CartIcon from "../Cart/CartIcon";
 
 import classes from "./HeaderCartButton.module.css";
+import CartContext from "../../../store/cart-context";
 
 const HeaderCartButton = (props) => {
   const [btnIsHighlighted, setBtnIsHighlighted] = useState(false);
@@ -27,9 +27,12 @@ const HeaderCartButton = (props) => {
       clearTimeout(timer);
     };
   }, [items]);
+  const handleShowCart = () => {
+    cartContext.toggleShowCart();
+  };
 
   return (
-    <button onClick={props.onClick} className={btnClasses}>
+    <button onClick={handleShowCart} className={btnClasses}>
       <span className={classes.icon}>
         <CartIcon />
       </span>
