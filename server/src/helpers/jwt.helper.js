@@ -1,7 +1,3 @@
-/**
- * Created by trungquandev.com's author on 16/10/2019.
- * src/controllers/auth.js
- */
 const jwt = require("jsonwebtoken");
 
 /**

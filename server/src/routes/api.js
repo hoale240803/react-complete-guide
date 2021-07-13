@@ -1,12 +1,7 @@
-/**
- * Created by trungquandev.com's author on 16/10/2019.
- * src/routes/api.js
- */
 const express = require("express");
 const router = express.Router();
 const AuthMiddleWare = require("../middleware/AuthMiddleware");
 const AuthController = require("../controllers/AuthController");
-const FriendController = require("../controllers/FriendController");
 const createOrder = require("../controllers/Orders");
 const {
   createMeal,
@@ -22,22 +17,22 @@ const {
  * @param {*} app from express
  */
 let initAPIs = (app) => {
+  // AUTHENTICATION
+  // router.use(AuthMiddleWare.auth_v1);
+  router.post("/users/register", AuthController.register);
+  router.post("/users/login_v1", AuthController.login_v1);
+  router.post("/users/me", AuthController.register);
+  router.post("/users/logout", AuthController.register);
+  router.post("/users/logout-all", AuthController.register);
+  // MEALS
   router.post("/meals", createMeal);
-  router.get("/meals", getMeals);
+  router.get("/meals", AuthMiddleWare.auth_v1, getMeals);
   router.get("/meals/:idMeal", getMealById);
   router.put("/meals/:idMeal", updateMealById);
   router.delete("/meals", deleteMealsByListId);
   router.delete("/meals/:idMeal", deleteMealById);
+  // ORDERS
   router.post("/orders", createOrder);
-  router.post("/login", AuthController.login);
-  router.post("/refresh-token", AuthController.refreshToken);
-
-  // Sử dụng authMiddleware.isAuth trước những api cần xác thực
-  router.use(AuthMiddleWare.isAuth);
-  // List Protect APIs:
-  router.get("/friends", FriendController.friendLists);
-  // router.get("/example-protect-api", ExampleController.someAction);
-
   return app.use("/", router);
 };
 

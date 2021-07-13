@@ -10,6 +10,9 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 
 // set up mongoose
+mongoose.set("useNewUrlParser", true);
+mongoose.set("useFindAndModify", false);
+mongoose.set("useCreateIndex", true);
 mongoose
   .connect("mongodb://localhost/hoalmeal")
   .then(() => {

@@ -36,7 +36,7 @@ function getMeals(req, res) {
   return Meal.find()
     .select("_id name price description amount")
     .then((listMeals) => {
-      console.log("LIST MEALS GOTCHA!!!", listMeals);
+      console.log("LIST MEALS GOTCHA!!!");
       return res.status(200).json({
         success: true,
         message: "GET MEAL LIST SUCCESSFULLY",
