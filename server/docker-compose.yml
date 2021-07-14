@@ -1,0 +1,24 @@
+version: "3.7"
+services:
+  app:
+    build: .
+    image: nodejs-server
+    container_name: nodejs_app
+    restart: always
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+    networks:
+      - mern-network
+  mongo:
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27018:27018"
+    networks:
+      - mern-network
+networks:
+  mern-network:
+    driver: bridge

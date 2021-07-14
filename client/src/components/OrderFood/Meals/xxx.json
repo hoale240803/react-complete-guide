@@ -1,0 +1,72 @@
+{
+  "meals": [
+    {
+      "id": "m1",
+      "name": "Sushi",
+      "description": "Finest fish and veggies",
+      "price": 10
+    },
+    {
+      "id": "m2",
+      "name": "Schnitzel",
+      "description": "A german specialty!",
+      "price": 30
+    },
+    {
+      "id": "m3",
+      "name": "Barbecue Burger",
+      "description": "American, raw, meaty",
+      "price": 12
+    },
+    {
+      "id": "m4",
+      "name": "Green Bowl",
+      "description": "Healthy...and green...",
+      "price": 20
+    }
+  ],
+  "tasks": [
+    {
+      "id": "t1",
+      "name": "Clean Windows",
+      "description": "Clean so beautiful",
+      "deadline": "2021/10/1 12:12:00",
+      "taskmaster": "X man",
+      "laborer": "Hoa",
+      "location": "Kitchen"
+    }
+  ],
+  "orders": [
+    {
+      "id": "xxxxx",
+      "customer": "name of person",
+      "total": 123,
+      "items": [
+        {
+          "id_product": "",
+          "name": "snack",
+          "price": 12,
+          "amount": 2,
+          "created": "2022/12//12 12:12:12",
+          "shop": "fine_food",
+          "image": "image.jpg"
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "id": "id_user",
+      "firstName": "Hoa",
+      "email": "hoa@gmail.com",
+      "phone": "0334517232",
+      "password": "dsfsdcv",
+      "created": "2022/12//12 12:12:12",
+      "role": "admin",
+      "dataOfBirth": "1999/1/21"
+    }
+  ],
+  "expenses":[
+      
+  ]
+}
