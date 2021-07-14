@@ -9,17 +9,10 @@ const initAPIs = require("./routes/api");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+let PORT = process.env.PORT || 5000;
 // console.log(process.env);
 // set up dotenv
 
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
-
-// set up mongoose
-mongoose.set("useNewUrlParser", true);
-mongoose.set("useFindAndModify", false);
-mongoose.set("useCreateIndex", true);
 // LOCAL
 // mongoose
 //   .connect("mongodb://localhost/hoalmeal")
@@ -30,7 +23,11 @@ mongoose.set("useCreateIndex", true);
 //     console.log("Error connecting to database");
 //   });
 mongoose
-  .connect("mongodb://mongo:27018/hoa_meals")
+  .connect(process.env.MONGODB_URI || "mongodb://localhost:27017/hoa_meals", {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+  })
   .then(() => {
     console.log("Database connected");
   })
@@ -43,8 +40,11 @@ app.use(express.json());
 // Khởi tạo các routes cho ứng dụng
 initAPIs(app);
 
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+  app.use(express.static("client/build"));
+}
 // chọn một port mà bạn muốn và sử dụng để chạy ứng dụng tại local
-let port = 5000;
-app.listen(port, () => {
-  console.log(`Hello HoaL, I'm running at http://localhost:${port}/`);
+app.listen(PORT, () => {
+  console.log(`Hello HoaL, I'm running at http://localhost:${PORT}/`);
 });

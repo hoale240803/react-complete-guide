@@ -8,7 +8,10 @@
     "start": "nodemon --inspect server.js",
     "docker:prod": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up",
     "docker:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up",
-    "docker:test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up"
+    "docker:test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up",
+    "build": "cd client && npm run build",
+    "install-client":"cd client && npm install",
+    "push-to-heroku":"npm run install-client && npm run build"
   },
   "repository": {
     "type": "git",
