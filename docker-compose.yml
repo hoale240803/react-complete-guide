@@ -1,38 +1,48 @@
-version: "3"
+version: "3.7"
 services:
-  react-app:
-    image: react-app-dev
-    stdin_open: true
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: react-nodejs-server
+    container_name: react-nodejs-server
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+    env_file: ./server/.env
+    networks:
+      - mern-network
+  mongo:
+    image: mongo
+    volumes:
+      - data-volume:/data/db
+    ports:
+      - "27018:27018"
+    networks:
+      - mern-network
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    image: reactjs-client
+    container_name: react-client
+    command: npm start
+    volumes:
+      - ./client/:/usr/app
+      - /usr/app/node_modules
+    depends_on:
+      - server
     ports:
       - "3000:3000"
     networks:
-      - mern-app
-    volumes:
-      - ./client/:/usr/src/app
-      - /usr/src/app/node_modules
-  api-server:
-    image: api-server
-    env_file: ./server/config/dev.env
-    ports:
-      - "5000:5000"
-    networks:
-      - mern-app
-    volumes:
-      - ./server/:/usr/src/app
-      - /usr/src/app/node_modules
-    depends_on:
-      - mongo
-  mongo:
-    image: mongo:4.4-bionic
-    ports:
-      - "27017:27017"
-    networks:
-      - mern-app
-    volumes:
-      - mongo-data:/data/db
+      - mern-network
+
 networks:
-  mern-app:
+  mern-network:
     driver: bridge
 volumes:
-  mongo-data:
+  data-volume:
+  node_modules:
+  web-root:
     driver: local

@@ -1,14 +1,8 @@
-FROM node:14-slim
-
+FROM node:16-alpine
+RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-
-COPY ./package.json ./
-COPY ./yarn.lock ./
-
+COPY ./yarn.lock /usr/src/app
 RUN yarn
-
-COPY . .
-
+COPY . /usr/src/app
 EXPOSE 5000
-
-CMD [ "yarn", "start" ]
+CMD ["yarn", "start"]
