@@ -1,21 +1,16 @@
-# Dockerfile for React client
+FROM node:14-slim
 
-# Build react client
-FROM node:16-alpine
-
-RUN mkdir -p /usr/src/app
-# Working directory be app
 WORKDIR /usr/src/app
 
-COPY package*.json /usr/src/app
+COPY ./package.json ./
+COPY ./yarn.lock ./
 
-###  Installing dependencies
+RUN yarn install
 
-RUN npm install
+COPY . .
 
-# copy local files to app folder
-COPY . /usr/src/app
+ENV REACT_APP_BASE_URL=http://localhost:5000/api
 
 EXPOSE 3000
 
-CMD ["npm","start"]
+CMD [ "yarn", "start" ]

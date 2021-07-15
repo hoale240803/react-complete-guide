@@ -30,7 +30,7 @@ mongoose.set("useCreateIndex", true);
 //     console.log("Error connecting to database");
 //   });
 mongoose
-  .connect("mongodb://mongo:27018/hoa_meals")
+  .connect("mongodb://mongo:27017/hoa_meals")
   .then(() => {
     console.log("Database connected");
   })
