@@ -3,6 +3,7 @@ const debug = console.log.bind(console);
 const User = require("../models/users");
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
+const { sendDefaultMail } = require("../utils/mails/Mailer");
 
 const register = async (req, res) => {
   try {
@@ -42,7 +43,20 @@ const login_v1 = async (req, res) => {
   }
 };
 
+const verifyEmail = async (req, res) => {
+  try {
+    sendDefaultMail();
+    res.status(200).send({
+      message: "Send verify mail successfully",
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "Something wrong. Send mail error!. ",
+    });
+  }
+};
 module.exports = {
-  register: register,
-  login_v1: login_v1,
+  register,
+  login_v1,
+  verifyEmail,
 };

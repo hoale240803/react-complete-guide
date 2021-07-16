@@ -20,6 +20,16 @@ services:
       - "5000:5000"
     networks:
       - mern-app
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:4.4-bionic
+    ports:
+      - "27017:27017"
+    networks:
+      - mern-app
+    volumes:
+      - mongo-data:/data/db #move 'mongo-data' local to '/data/db' image mongo
 networks:
   mern-app:
     driver: bridge

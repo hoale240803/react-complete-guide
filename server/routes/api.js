@@ -22,6 +22,7 @@ let initAPIs = (app) => {
   router.post("/users/me", AuthController.register);
   router.post("/users/logout", AuthController.register);
   router.post("/users/logout-all", AuthController.register);
+  router.post("/users/verifyEmail", AuthController.verifyEmail);
   // MEALS
   router.post("/meals", MealsController.createMeal);
   router.get("/meals", AuthMiddleWare.auth_v1, MealsController.getMeals);
