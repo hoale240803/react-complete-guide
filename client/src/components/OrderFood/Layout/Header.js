@@ -9,7 +9,7 @@ const Header = (props) => {
   return (
     <Fragment>
       <header className={classes.header}>
-        <h1>HoaMeal</h1>
+        <h1>HoaMeal </h1>
         <ul className={classes.header__navbar}>
           <Link to="/movies">Movies</Link>
           <Link to="/tasks">Tasks</Link>

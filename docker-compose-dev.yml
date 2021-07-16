@@ -1,31 +1,31 @@
 version: "3"
 services:
-  react-app-local:
-    image: react-client
-    build: ./client
-    stdin_open: true # docker run -i, run background without any default app to run  https://stackoverflow.com/questions/48368411/what-is-docker-run-it-flag
+  react-client:
+    image: react-img
+    restart: always
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    stdin_open: true # docker run -i
     ports:
       - "3000:3000"
     networks:
       - mern-app
-    volumes:
-      - ./client:/usr/src/app
-      - /usr/src/app/node_modules # don't take any file from my local put at this path
-  nodejs-api-server-local:
+  api-server:
     image: api-server
-    build: ./server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
     stdin_open: true
     ports:
       - "5000:5000"
-    volumes:
-      - ./server:/usr/src/app
-      - /usr/src/app/node_modules
     networks:
       - mern-app
     depends_on:
       - mongo
   mongo:
     image: mongo:4.4-bionic
+    restart: always
     ports:
       - "27017:27017"
     networks:

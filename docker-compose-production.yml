@@ -1,0 +1,32 @@
+version: "3"
+services:
+  react-app-local:
+    image: react-client-production
+    restart: unless-stopped
+    stdin_open: true # docker run -i, run background without any default app to run  https://stackoverflow.com/questions/48368411/what-is-docker-run-it-flag
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - caddy-data:/data
+      - caddy-config:/config
+    networks:
+      - mern-app
+  nodejs-api-server-local:
+    image: api-server
+    restart: unless-stopped
+    stdin_open: true
+    ports:
+      - "5000:5000"
+    networks:
+      - mern-app
+networks:
+  mern-app:
+    driver: bridge
+volumes:
+  mongo-data:
+    driver: local
+  caddy-data:
+    driver: local
+  caddy-config:
+    driver: local

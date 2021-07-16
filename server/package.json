@@ -6,6 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --inspect server.js",
+    "start-env": "node -r dotenv/config server.js dotenv_config_path=/custom/path/to/.env",
+    "start-local": "cross-env NODE_ENV=local nodemon server.js",
     "docker:prod": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up",
     "docker:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up",
     "docker:test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up"
@@ -24,15 +26,20 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "dotenv-expand": "^5.1.0",
     "express": "^4.17.1",
+    "image-uploader": "^1.3.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.10",
     "mongoose": "^5.13.2",
     "morgan": "^1.10.0",
-    "validator": "^13.6.0",
-    "dotenv": "^10.0.0"
+    "multer": "^1.4.2",
+    "validator": "^13.6.0"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "env-cmd": "^10.1.0",
     "nodemon": "^2.0.12"
   }

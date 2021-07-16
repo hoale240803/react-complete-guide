@@ -1,50 +1,57 @@
-/**
- * Created by HoaL
- * src/server.js
- */
-
 const express = require("express");
 const app = express();
 const initAPIs = require("./routes/api");
-const logger = require("morgan");
+// const logger = require("morgan");
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-// console.log(process.env);
-// set up dotenv
 
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
+//ADD OTHER MIDDLEWARE
+const cors = require("cors");
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
 
-// set up mongoose
-mongoose.set("useNewUrlParser", true);
-mongoose.set("useFindAndModify", false);
-mongoose.set("useCreateIndex", true);
-// LOCAL
-// mongoose
-//   .connect("mongodb://localhost/hoalmeal")
-//   .then(() => {
-//     console.log("Database connected");
-//   })
-//   .catch((error) => {
-//     console.log("Error connecting to database");
-//   });
+//SET UP ENV VARIABLES
+const path = require("path");
+require("dotenv").config({
+  path: path.resolve(__dirname, `config/${process.env.NODE_ENV}.env`),
+});
+
+const connectionString = process.env.MONGO_URL;
+const PORT = process.env.PORT;
+global.__basedir = __dirname;
+
+var corsOptions = {
+  origin: process.env.BASE_URL,
+};
+process.env.Node;
+
+app.use(cors(corsOptions));
+
+console.log("NODE_ENV>>>>", process.env.NODE_ENV);
+console.log("ENV __dirname", __dirname);
+
+console.log("ENV PORT", process.env.PORT);
+
+console.log("ENV BASE_URL", process.env.BASE_URL);
+
+console.log("ENV DB URL", process.env.MONGO_URL);
+
+console.log("ENV TEST", process.env.TEST);
+
 mongoose
-  .connect("mongodb://mongo:27017/hoa_meals")
+  .connect(connectionString, {
+    useCreateIndex: true,
+    useNewUrlParser: true,
+    useFindAndModify: false,
+  })
   .then(() => {
     console.log("Database connected");
   })
   .catch((error) => {
     console.log("Error connecting to database", error);
   });
-// Cho phép các api của ứng dụng xử lý dữ liệu từ body của request
 app.use(express.json());
-
-// Khởi tạo các routes cho ứng dụng
 initAPIs(app);
 
-// chọn một port mà bạn muốn và sử dụng để chạy ứng dụng tại local
-let port = 5000;
-app.listen(port, () => {
-  console.log(`Hello HoaL, I'm running at http://localhost:${port}/`);
+app.listen(PORT, () => {
+  console.log(`Hello HoaL, I'm running at http://localhost:${PORT}/`);
 });

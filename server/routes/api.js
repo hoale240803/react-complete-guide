@@ -3,19 +3,17 @@ const router = express.Router();
 const AuthMiddleWare = require("../middleware/AuthMiddleware");
 const AuthController = require("../controllers/AuthController");
 const createOrder = require("../controllers/Orders");
-const {
-  createMeal,
-  deleteMealById,
-  deleteMealsByListId,
-  getMeals,
-  getMealById,
-  updateMealById,
-} = require("../controllers/meals");
+const MealsController = require("../controllers/meals");
+
+const FilesController = require("../controllers/FileController");
 
 /**
  * Init all APIs on your application
  * @param {*} app from express
  */
+
+const baseURL = process.env.REACT_APP_BASE_URL;
+
 let initAPIs = (app) => {
   // AUTHENTICATION
   // router.use(AuthMiddleWare.auth_v1);
@@ -25,14 +23,19 @@ let initAPIs = (app) => {
   router.post("/users/logout", AuthController.register);
   router.post("/users/logout-all", AuthController.register);
   // MEALS
-  router.post("/meals", createMeal);
-  router.get("/meals", AuthMiddleWare.auth_v1, getMeals);
-  router.get("/meals/:idMeal", getMealById);
-  router.put("/meals/:idMeal", updateMealById);
-  router.delete("/meals", deleteMealsByListId);
-  router.delete("/meals/:idMeal", deleteMealById);
+  router.post("/meals", MealsController.createMeal);
+  router.get("/meals", AuthMiddleWare.auth_v1, MealsController.getMeals);
+  router.get("/meals/:idMeal", MealsController.getMealById);
+  router.put("/meals/:idMeal", MealsController.updateMealById);
+  router.delete("/meals", MealsController.deleteMealsByListId);
+  router.delete("/meals/:idMeal", MealsController.deleteMealById);
   // ORDERS
   router.post("/orders", createOrder);
+  // FILES
+  router.post("/files/file", FilesController.handleUploadFile);
+  router.post("/files/image", FilesController.handleUploadImage);
+  router.get("/files/download", FilesController.getFiles);
+  router.get("/files/:name", FilesController.downloadFile);
   return app.use("/", router);
 };
 
