@@ -32,10 +32,12 @@ let initAPIs = (app) => {
   // ORDERS
   router.post("/orders", createOrder);
   // FILES
+  router.get("/files", FilesController.getFiles);
+  router.get("/files/images", FilesController.getImages);
   router.post("/files/file", FilesController.handleUploadFile);
   router.post("/files/image", FilesController.handleUploadImage);
-  router.get("/files/download", FilesController.getFiles);
   router.get("/files/:name", FilesController.downloadFile);
+  router.get("/files/images/:name", FilesController.downloadImage);
   return app.use("/", router);
 };
 
