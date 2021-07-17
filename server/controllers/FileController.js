@@ -1,9 +1,13 @@
 const {
   uploadFileMiddleware,
   uploadImageMiddleware,
+  uploadExcelMiddleware,
 } = require("../middleware/FileUpload");
 const fs = require("fs");
 const path = require("path");
+const mongoose = require("mongoose");
+const products = require("../models/product");
+const excelToJson = require("../utils/files/Excel");
 
 const handleUploadFile = async (req, res) => {
   try {
@@ -136,9 +140,42 @@ const downloadImage = (req, res) => {
   }
 };
 
+const handleUploadExcel = async (req, res) => {
+  try {
+    await uploadExcelMiddleware(req, res);
+
+    if (req.file.filename === null) {
+      res.status(400).send({
+        message: `PLEASE CHOOSE ONE FILE!`,
+      });
+    }
+    const absoluteFilePath = path.normalize(
+      __basedir +
+        "/resources/static/assets/upload/products/" +
+        req.file.filename
+    );
+    const excelData = excelToJson(absoluteFilePath);
+    fs.unlinkSync(absoluteFilePath);
+
+    return products.insertMany(excelData.Products).then(() => {
+      console.log("INSERTED LIST OF PRODUCT SUCCESSFULLY");
+      return res.status(200).json({
+        success: true,
+        message: "INSERTED LIST OF PRODUCT SUCCESSFULLY",
+      });
+    });
+  } catch (error) {
+    console.log(`Server Error: ${error}`);
+    if (error.code === "LIMIT_UNEXPECTED_FILE") {
+      return res.send("Too many files to upload.");
+    }
+  }
+};
+
 module.exports = {
   handleUploadFile,
   handleUploadImage,
+  handleUploadExcel,
   getImages,
   getFiles,
   downloadFile,

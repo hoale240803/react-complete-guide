@@ -8,6 +8,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+//GMAIL NOT ALLOW ICON, EMOJI IS OK
 const sendDefaultMail = () => {
   try {
     transporter
@@ -23,14 +24,7 @@ const sendDefaultMail = () => {
           "<b> 🍓  There is a new article. It's about sending emails, check it out! 🍓 </b> <hr>" +
           "<a href='https://www.w3schools.com'>Visit W3Schools.com!</a> <br> <br><br>" +
           "<img src='https://images.pexels.com/photos/4194613/pexels-photo-4194613.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260' alt='Girl in a jacket' width='500' height='600'/> <hr> <br>" +
-          "<b class='icons'> 💘 Very awesome guy, <strong>FOLLOW ME! :</strong> if you want! 💘 </b>  " +
-          '<a href="#" class="fa fa-facebook" class="basdf"></a>' +
-          '<a href="#" class="fa fa-twitter"></a>' +
-          '<a href="#" class="fa fa-pinterest"></a>' +
-          '<a href="#" class="fa fa-linkedin"></a>' +
-          '<a href="#" class="fa fa-instagram"></a>' +
-          '<a href="#" class="fa fa-youtube"></a>' +
-          '<a href="#" class="fa fa-google"></a>',
+          "<b class='icons'> 💘 Very awesome guy, <strong>FOLLOW ME! :</strong> if you want! 💘 </b>  ",
       })
       .then((info) => {
         console.log({ info });

@@ -83,6 +83,40 @@ let imageStorage = multer.diskStorage({
   },
 });
 
+let excelStorage = multer.diskStorage({
+  destination: (req, excelFile, callback) => {
+    callback(null, __basedir + "/resources/static/assets/upload/products");
+  },
+  filename: (req, excelFile, callback) => {
+    console.log("");
+    var ext = path.extname(excelFile.originalname);
+    if (ext !== ".xlsx") {
+      return callback(new Error("Only PDF file allowed"));
+    }
+    // IDENTIFY TYPE OF FILE
+    var filetype = "";
+    switch (excelFile.mimetype) {
+      case "application/xlsx":
+        filetype = "xlsx";
+        break;
+      default:
+        filetype = "unknown";
+        break;
+    }
+    // NAME OF FILE SHOULD BE ABC_20200612_png_nameOfFile
+    callback(
+      null,
+      excelFile.fieldname +
+        "_" +
+        Date.now() +
+        "_" +
+        filetype +
+        "_" +
+        excelFile.originalname
+    );
+  },
+});
+
 let uploadFile = multer({
   storage: fileStorage,
   limits: { fileSize: FILE_CONSTANTS.MAX_SIZE_FILE },
@@ -93,9 +127,16 @@ let uploadImage = multer({
   limits: { fileSize: FILE_CONSTANTS.MAX_SIZE_IMAGE },
 }).single("image");
 
+let uploadExcel = multer({
+  storage: excelStorage,
+  limits: { fileSize: FILE_CONSTANTS.MAX_SIZE_FILE },
+}).single("excelFile");
+
 let uploadFileMiddleware = utils.promisify(uploadFile);
 let uploadImageMiddleware = utils.promisify(uploadImage);
+let uploadExcelMiddleware = utils.promisify(uploadExcel);
 module.exports = {
   uploadFileMiddleware,
   uploadImageMiddleware,
+  uploadExcelMiddleware,
 };
